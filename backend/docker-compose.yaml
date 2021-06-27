@@ -1,0 +1,43 @@
+version: '3'
+services:
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: focusmate-app
+    
+    environment:
+      - FLASK_APP=run.py
+      - APP_SETTINGS=developmentDocker
+      - DATABASE_URL=postgresql://postgres:1q2w3e4r5t@focusmate-db/focusmate
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/focusmate/application
+    working_dir: /focusmate/application
+    networks:
+      - backend-net
+    command: >
+      sh -c "sleep 5 &&
+             flask db upgrade &&
+             python run.py"
+
+  postgresql:
+    image: postgres:latest
+    container_name: focusmate-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=1q2w3e4r5t
+      - POSTGRES_DB=focusmate
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend-net
+
+networks:
+  backend-net:
+    driver: bridge
+
+volumes:
+  db-data:

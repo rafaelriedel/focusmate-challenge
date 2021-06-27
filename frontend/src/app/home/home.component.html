@@ -1,0 +1,62 @@
+<div class="p-4">
+    <div class="container">
+        <h1>Focusmate Challenge</h1>
+        <p>Please select your action</p>
+        <button (click)="openCreateSessionModal(template)" type="button" class="btn btn-primary">Create a new session</button>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>Start time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let session of this.sessions">
+            <td>{{ session.id }}</td>
+            <td>{{ session.user.email }}</td>
+            <td>{{ session.start_datetime }}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<!-- Modal -->
+<ng-template #template>
+  <form [formGroup]="form">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Create a new session</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group row">
+        <label for="example-time-input" class="col-3 col-form-label">Start time</label>
+        <div class="col-4">
+            <input formControlName="start_time" class="form-control" type="time" value="13:45:00" id="example-time-input">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="example-time-input" class="col-3 col-form-label">User</label>
+        <div class="col-9">
+          <select formControlName="user_id" class="form-control custom-select col-12" id="inlineFormCustomSelect">
+              <option selected>Choose...</option>
+              <option *ngFor="let user of this.users" value="{{ user.id }}">
+                {{ user.email }}
+              </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="createSession()">Create</button>
+      <button type="button" class="btn btn-danger" (click)="closeModal()">Cancel</button>
+    </div>
+  </form>
+</ng-template>

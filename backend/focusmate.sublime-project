@@ -1,0 +1,13 @@
+{
+     "folders":
+    [
+        {
+            "follow_symlinks": true,
+            "path": "."
+        }
+    ],
+    "settings": {
+          "SublimeLinter.linters.flake8.disable": true,
+          "python_interpreter": "~/dev/sandbox/focusmate/backend/venv/bin/python"     
+    }     
+}
